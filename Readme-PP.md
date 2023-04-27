@@ -31,6 +31,7 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 mkdir argocd
 cd .\argocd\
+$version = (Invoke-RestMethod https://api.github.com/repos/argoproj/argo-cd/releases/latest).tag_name
 $url = "https://github.com/argoproj/argo-cd/releases/download/" + $version + "/argocd-windows-amd64.exe"
 $output = "argocd.exe"
 Invoke-WebRequest -Uri $url -OutFile $output
@@ -69,6 +70,8 @@ Note: this will lock the terminal, but will give a url where it is exposed.
 
 ```sh
 minikube service gateway -n <namespace> --url
+
+minikube service gateway -n default --url
 ```
 
 Then call the url to open the apollo graph studio against the local server
